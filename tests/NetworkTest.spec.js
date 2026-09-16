@@ -3,6 +3,7 @@ const { APIUtils } = require('./utils/APIUtils');
 
 const loginPayload = { userEmail: "pbvedavyas29@gmail.com", userPassword: "Rahul@123" };
 const orderPayload = { orders: [{ country: "India", productOrderedId: "6960eac0c941646b7a8b3e68" }] };
+const fakePayloadOrders = { data: [], message: "No Orders" };
 
 
 
@@ -20,7 +21,7 @@ test.beforeEach(() => {
 
 })
 
-test('Place Order', async ({ page }) => {
+test.only('Place Order', async ({ page }) => {
 
     const productName = "ZARA COAT 3";
     const email = "pbvedavyas29@gmail.com";
@@ -51,28 +52,22 @@ test('Place Order', async ({ page }) => {
 
     await page.goto('https://rahulshettyacademy.com/client/#/auth/login');
 
-    // Below login steps are disabled cuz we are embedding token already, the URL will load logged in
 
-    // await userName.fill(email);
-    // await password.fill('Rahul@123');
-    // await signInBtn.click();
+    await page.route("https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/*", async route => {
+        // intercepting the API response -> {playwright fakeresponse } -> browser -> render data in front-end
+        const response = await page.request.fetch(route.request());
 
-    // await page.waitForLoadState('networkidle'); // Not working for a few people and is also discouraged to use this in playwrght website
+        let body = JSON.stringify(fakePayloadOrders);
 
-
+        route.fulfill({
+            response,
+            body
+        });
+    })
     await myOrders.click();
-    await page.locator("tbody").waitFor();
-    for (let i = 0; i < await rows.count(); i++) {
-        const rowOrderId = await rows.nth(i).locator("th").textContent();
-        if (response.orderId.includes(rowOrderId)) {
-            await rows.nth(i).locator("button").first().click();
-            break;
-        }
-    }
-
-    const orderIdDetails = await page.locator(".col-text").textContent();
-    await expect(response.orderId.includes(orderIdDetails)).toBeTruthy();
-    await page.pause();
+    await page.waitForResponse('https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/*');
+    console.log(page.locator('.mt-4').textContent());
+    // await page.locator("tbody").waitFor();
 }
 
 )

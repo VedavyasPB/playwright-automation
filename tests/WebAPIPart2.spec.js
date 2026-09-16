@@ -1,15 +1,18 @@
 const { test, expect } = require('@playwright/test');
 let titles;
 let webContext;
+const email = "pbvedavyas29@gmail.com";
 test.beforeAll(async ({ browser }) => {
-    const email = "pbvedavyas29@gmail.com";
     const context = await browser.newContext();
     const page = await context.newPage();
+
+    // Locators    
     const userName = page.locator("#userEmail");
     const password = page.locator("#userPassword");
     const signInBtn = page.locator("[value='Login']");
     titles = page.locator('.card-body b');
 
+    // Test
     await page.goto('https://rahulshettyacademy.com/client/#/auth/login');
     await userName.fill(email);
     await password.fill('Rahul@123');
@@ -22,11 +25,13 @@ test.beforeAll(async ({ browser }) => {
 
 })
 
-test.only('Place Order', async () => {
+test('Place Order', async () => {
 
     const productName = "ZARA COAT 3";
 
     const page = await webContext.newPage();
+
+    //Locators
 
     const products = page.locator(".card-body");
     const cartButton = page.locator("[routerlink*='cart']");
@@ -39,6 +44,7 @@ test.only('Place Order', async () => {
     const myOrders = page.locator("button[routerlink*='myorders']");
     const rows = page.locator("tbody tr");
 
+    await page.goto('https://rahulshettyacademy.com/client/#/auth/login');
 
 
 
@@ -49,6 +55,8 @@ test.only('Place Order', async () => {
 
     // await page.waitForLoadState('networkidle'); // Not working for a few people and is also discouraged to use this in playwrght website
     // await titles.first().waitFor();
+
+
     const titleNames = await titles.allTextContents();
     console.log(titleNames);
 
@@ -63,7 +71,7 @@ test.only('Place Order', async () => {
     await cartButton.click();
     await page.locator("div li").first().waitFor();
 
-    const bool = await page.locator("h3:has-text('Zara Coat 3')").isVisible();
+    const bool = await page.locator("h5:has-text('Zara Coat 3')").isVisible();
     expect(bool).toBeTruthy();
     await checkOut.click();
 

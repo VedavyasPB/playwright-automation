@@ -138,7 +138,7 @@ test('Child window handling', async ({ browser }) => {
 
     await userName.fill(domain);
     console.log(`${await userName.inputValue()} is the username`);
-    page.pause();
+    await page.pause();
 
 })
 

@@ -1,3 +1,4 @@
+const { expect } = require('@playwright/test');
 class APIUtils {
     constructor(apiContext, loginPayload) {
         this.apiContext = apiContext;
@@ -20,11 +21,10 @@ class APIUtils {
         response.token = await this.getToken();
         const orderResponse = await this.apiContext.post('https://rahulshettyacademy.com/api/ecom/order/create-order', { data: orderPayload, headers: { 'Authorization': response.token, 'Content-type': 'application/json' } })
         const orderResponseJSON = await orderResponse.json();
-        orderId = orderResponseJSON.orders[0];
+        let orderId = orderResponseJSON.orders[0];
         console.log(`Here is the placed order ID: ${orderId}`)
         response.orderId = orderId;
         return response;
-
     }
 }
 
