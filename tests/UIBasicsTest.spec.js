@@ -1,16 +1,20 @@
 const { test, expect } = require('@playwright/test');
+const { request } = require('node:http');
 
-test('Browser Context Playwright Test', async ({ browser }) => {
+test.only('Browser Context Playwright Test', async ({ browser }) => {
 
 
 
     const context = await browser.newContext();
     const page = await context.newPage();
-
+    // page.route('**/*.{jpg,png,jpeg}}', route => route.abort());
     const userName = page.locator("#username");
     const password = page.locator("[type='password']");
     const signInBtn = page.locator("#signInBtn");
     const cardTitles = page.locator('.card-body a');
+
+    page.on('request', request => console.log(request.url()));
+    page.on('response', response => console.log(response.url(), response.status()));
 
     await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
     await page.locator("#username").fill('rahulshettyacademy');

@@ -64,8 +64,12 @@ test.only('Place Order', async ({ page }) => {
             body
         });
     })
-    await myOrders.click();
-    await page.waitForResponse('https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/*');
+    const [response] = await Promise.all([
+        page.waitForResponse(
+            'https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/*'
+        ),
+        myOrders.click()
+    ]);
     console.log(page.locator('.mt-4').textContent());
     // await page.locator("tbody").waitFor();
 }
