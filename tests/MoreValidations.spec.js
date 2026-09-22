@@ -6,7 +6,9 @@ test('pop-up validations', async ({ page }) => {
     // await page.goBack();
     // await page.goForward();
     await expect(page.locator('#displayed-text')).toBeVisible();
+    await page.locator('#hide-textbox').screenshot({ path: 'partialScreenshot.png' });
     await page.locator('#hide-textbox').click();
+    await page.screenshot({ path: 'screenshot.png' });
     await expect(page.locator('#displayed-text')).toBeHidden();
 
     page.on('dialog', dialog => dialog.accept()); //throughout the script wherever or whenever this event occurs, the dialog gets accepted

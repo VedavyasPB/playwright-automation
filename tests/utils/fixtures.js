@@ -1,6 +1,5 @@
 const { request } = require('@playwright/test');
 const base = require('@playwright/test');
-const { use } = require('react');
 const { APIUtils } = require('./APIUtils.js');
 
 let response;
@@ -15,17 +14,24 @@ exports.customTest = base.test.extend(
 
             const userName = page.locator("#userEmail");
             const password = page.locator("#userPassword");
+            const signInBtn = page.locator("[value='Login']");
 
-            await userName.fill(email);
+
+            await userName.fill(loginPayload.userEmail);
             await password.fill('Rahul@123');
             await signInBtn.click();
             await use(page);
+
         },
         createOrder: async ({ }, use) => {
             const apiContext = await request.newContext();
             const apiUtils = new APIUtils(apiContext, loginPayload);
             response = await apiUtils.createOrder(orderPayload);
-            use(response);
+            await use(response);
+            await apiContext.dispose();
+        },
+        testDataForOrder: {
+            productName: 'ADIDAS ORIGINAL'
         }
     }
 
