@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 const { request } = require('node:http');
 
-test.only('Browser Context Playwright Test', async ({ browser }) => {
+test('Browser Context Playwright Test', async ({ browser }) => {
 
 
 

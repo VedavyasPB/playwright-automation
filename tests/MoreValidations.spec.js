@@ -20,3 +20,8 @@ test('pop-up validations', async ({ page }) => {
     console.log(textCheck.split(" ")[1]);
 
 })
+
+test.only('visual', async ({ page }) => {
+    await page.goto('https://www.flightaware.com/');
+    expect(await page.screenshot()).toMatchSnapshot('landing.png');
+})

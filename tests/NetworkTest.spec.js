@@ -21,7 +21,7 @@ test.beforeEach(() => {
 
 })
 
-test.only('Place Order', async ({ page }) => {
+test('Place Order', async ({ page }) => {
 
     const productName = "ZARA COAT 3";
     const email = "pbvedavyas29@gmail.com";

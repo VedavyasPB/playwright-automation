@@ -1,7 +1,7 @@
 const { test, expect, request } = require('@playwright/test');
 
 
-test.only('Security Test Network Intercept', async ({ page }) => {
+test('Security Test Network Intercept', async ({ page }) => {
 
     const productName = "ZARA COAT 3";
     const email = "pbvedavyas29@gmail.com";
