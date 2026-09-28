@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
+// import { use } from 'react';
 
 /**
  * @see https://playwright.dev/docs/test-configuration
@@ -18,7 +19,6 @@ const config = ({
     navigationTimeout: 30000,
     screenshots: 'on',
     trace: 'on'
-
   }
 
 });
