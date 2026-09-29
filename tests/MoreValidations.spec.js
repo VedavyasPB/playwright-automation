@@ -1,5 +1,6 @@
 const { test, expect } = require('@playwright/test');
-
+test.describe.configure({ mode: 'parallel' });
+// test.describe.configure({ mode: 'serial' }); //even without this the tests in same file run serially, but the perk of using this is: we can use this for interdependent tests, if one fails remaining won't execute which are in the same file
 test('pop-up validations', async ({ page }) => {
     await page.goto('https://rahulshettyacademy.com/AutomationPractice/');
     // await page.goto('https://google.com');

@@ -18,7 +18,8 @@ const config = ({
     actionTimeout: 10000,
     navigationTimeout: 30000,
     screenshots: 'on',
-    trace: 'on'
+    trace: 'on',
+    video: 'retain-on-failure'
   }
 
 });
